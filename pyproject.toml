@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "everycompare"
+version = "0.1.0"
+description = "Core Python library + CLI for everycompare, a tool for finding similar/identical files inside a path"
+authors = ["Michał Woźniczak <michal.wozniczak@gmail.com>"]
+license = "GPL-3.0"
+
+[tool.poetry.dependencies]
+python = ">=3.4"
+binaryornot = "^0.4.4"
+pylev3 = "^1.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
