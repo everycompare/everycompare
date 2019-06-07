@@ -1,32 +1,14 @@
 import json
 import os
 
-from .structures import ForceGraphNode
-
 def force_graph(results):
-    _groups = []
+    _dirs = set()
     nodes = set()
     links = []
 
     for result in results:
-        groups = [os.path.dirname(x) for x in result.paths]
-
-        if groups[0] in _groups:
-            group_left = _groups.index(groups[0])
-        else:
-            _groups.append(groups[0])
-            group_left = len(groups) - 1
-        
-        if groups[1] in _groups:
-            group_right = _groups.index(groups[1])
-        else:
-            _groups.append(groups[1])
-            group_right = len(groups) - 1
-        
-        nodes |= {
-            ForceGraphNode(id=result.paths[0], group=group_left),
-            ForceGraphNode(id=result.paths[1], group=group_right),
-        }
+        _dirs |= {os.path.dirname(x) for x in result.paths}
+        nodes |= set(result.paths)
 
         if result.difference < 100:
             links.append({
@@ -35,9 +17,11 @@ def force_graph(results):
                 'value': result.difference
             })
 
+    _dirs = sorted(_dirs)
+
     return json.dumps({
         'nodes': [
-            {'id': x.id, 'group': x.group}
+            {'id': x, 'group': _dirs.index(os.path.dirname(x))}
             for x in sorted(nodes)
         ],
         'links': links
