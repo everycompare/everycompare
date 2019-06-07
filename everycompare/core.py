@@ -3,7 +3,7 @@ from functools import lru_cache, partial
 import os
 
 from binaryornot.check import is_binary
-from pylev3 import Levenshtein
+import Levenshtein
 
 from .structures import ComparisonResult, FileMeta
 
@@ -59,7 +59,7 @@ def compare_pair(items, base_path):
     elif not any(x.is_binary for x in (left, right)):
         max_len = max(left.text_length, right.text_length)
         return ComparisonResult(
-            difference=Levenshtein.wfi(left.contents, right.contents) * 100 / max_len,
+            difference=Levenshtein.distance(left.contents, right.contents) * 100 / max_len,
             paths=paths,
             method='STRING_COMPARISON'
         )
