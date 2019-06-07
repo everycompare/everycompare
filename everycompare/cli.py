@@ -3,7 +3,11 @@ import re
 import sys
 from multiprocessing import Pool
 
-from tqdm import tqdm
+try:
+    from tqdm import tqdm
+except ImportError:
+    def tqdm(result, *args, **kwargs):
+        return sorted(result)
 
 from .core import compare
 from .formatters import available_formatters
@@ -22,18 +26,16 @@ def main(args=None):
         'path': params['dir_path'],
         'only_text': True
     }
-
-    if params['count'] > 1:
-        p = Pool(params['count'])
-        kwargs['mapping_function'] = p.imap
-
     if params.get('exclude'):
         kwargs['exclusion_pattern'] = re.compile(params['exclude'])
-
+    
     formatter = available_formatters[params['format']]
 
-    result, count = compare(**kwargs)
-    processed = [i for i in tqdm(result, total=count)]
+    with Pool(params['count']) as p:
+        kwargs['mapping_function'] = p.imap_unordered
+
+        result, count = compare(**kwargs)
+        processed = [i for i in tqdm(result, total=count)]
 
     out = formatter(processed)
     print(out)
