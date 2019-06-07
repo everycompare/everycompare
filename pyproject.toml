@@ -12,6 +12,7 @@ everycompare = "everycompare.cli:main"
 python = ">=3.4"
 binaryornot = "^0.4.4"
 pylev3 = "^1.1"
+tqdm = "^4.32"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.3"

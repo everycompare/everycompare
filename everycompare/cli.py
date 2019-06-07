@@ -1,8 +1,9 @@
 import argparse
 import re
 import sys
-
 from multiprocessing import Pool
+
+from tqdm import tqdm
 
 from .core import compare
 from .formatters import available_formatters
@@ -24,14 +25,17 @@ def main(args=None):
 
     if params['count'] > 1:
         p = Pool(params['count'])
-        kwargs['mapping_function'] = p.map
+        kwargs['mapping_function'] = p.imap
 
     if params.get('exclude'):
         kwargs['exclusion_pattern'] = re.compile(params['exclude'])
 
     formatter = available_formatters[params['format']]
 
-    out = formatter(compare(**kwargs))
+    result, count = compare(**kwargs)
+    processed = [i for i in tqdm(result, total=count)]
+
+    out = formatter(processed)
     print(out)
 
 if __name__ == "__main__":

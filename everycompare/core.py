@@ -74,5 +74,6 @@ def compare_pair(items, base_path):
 def compare(path, only_text=False, mapping_function=map, exclusion_pattern=None):
     files = get_files(path, only_text, exclusion_pattern)
     _comparer = partial(compare_pair, base_path=path)
+    to_compare = tuple(itertools.combinations(files, 2))
 
-    return sorted(mapping_function(_comparer, itertools.combinations(files, 2)))
+    return mapping_function(_comparer, to_compare), len(to_compare)
