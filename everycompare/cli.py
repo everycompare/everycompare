@@ -1,16 +1,21 @@
 import argparse
+import re
 import sys
 
 from multiprocessing import Pool
 
-from core import compare
+from .core import compare
+from .formatters import available_formatters
 
 parser = argparse.ArgumentParser()
 parser.add_argument('dir_path', help='Directory to analyze')
 parser.add_argument('-c', '--count', type=int, default=1, help='How many comparisons to execute in parallel (default 1)')
+parser.add_argument('-f', '--format', choices=sorted(available_formatters), default='raw', help='Output format')
+parser.add_argument('-e', '--exclude', help='Regular expression indicating which files/folders to exclude from comparison')
 
-if __name__ == "__main__":
-    params = vars(parser.parse_args(sys.argv[1:]))
+def main(args=None):
+    args = args or sys.argv[1:]
+    params = vars(parser.parse_args(args))
 
     kwargs = {
         'path': params['dir_path'],
@@ -21,5 +26,13 @@ if __name__ == "__main__":
         p = Pool(params['count'])
         kwargs['mapping_function'] = p.map
 
-    out = sorted(compare(**kwargs))
-    [print(x) for x in out]
+    if params.get('exclude'):
+        kwargs['exclusion_pattern'] = re.compile(params['exclude'])
+
+    formatter = available_formatters[params['format']]
+
+    out = formatter(compare(**kwargs))
+    print(out)
+
+if __name__ == "__main__":
+    main()
