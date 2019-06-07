@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "everycompare"
-version = "0.3.0"
+version = "0.3.5"
 description = "Core Python library + CLI for everycompare, a tool for finding similar/identical files inside a path"
 authors = ["Michał Woźniczak <michal.wozniczak@gmail.com>"]
 license = "GPL-3.0"
