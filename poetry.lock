@@ -1,0 +1,35 @@
+[[package]]
+category = "main"
+description = "Ultra-lightweight pure Python package to check if a file is binary or text."
+name = "binaryornot"
+optional = false
+python-versions = "*"
+version = "0.4.4"
+
+[package.dependencies]
+chardet = ">=3.0.2"
+
+[[package]]
+category = "main"
+description = "Universal encoding detector for Python 2 and 3"
+name = "chardet"
+optional = false
+python-versions = "*"
+version = "3.0.4"
+
+[[package]]
+category = "main"
+description = "A Python3 Levenshtein distance (re)implementation of pylev"
+name = "pylev3"
+optional = false
+python-versions = ">=3.3"
+version = "1.1.0"
+
+[metadata]
+content-hash = "189ea35eff008aca788aa088195a91320054bb2e876cb1e95b60398a446b7b84"
+python-versions = ">=3.4"
+
+[metadata.hashes]
+binaryornot = ["359501dfc9d40632edc9fac890e19542db1a287bbcfa58175b66658392018061", "b8b71173c917bddcd2c16070412e369c3ed7f0528926f70cac18a6c97fd563e4"]
+chardet = ["84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae", "fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"]
+pylev3 = ["286d24c9081c67586a69d2b298b1349a6e0d063b0e32a8d370bcb8683b1f996f"]

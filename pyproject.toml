@@ -5,6 +5,9 @@ description = "Core Python library + CLI for everycompare, a tool for finding si
 authors = ["Michał Woźniczak <michal.wozniczak@gmail.com>"]
 license = "GPL-3.0"
 
+[tool.poetry.scripts]
+everycompare = "everycompare.cli:main"
+
 [tool.poetry.dependencies]
 python = ">=3.4"
 binaryornot = "^0.4.4"
